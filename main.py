@@ -22,14 +22,26 @@ def get_date():
     num = get_input_number()
     i=0
     DATES = []
+    tt, mm,jjjj =(0,0,0)
     while(i<num):
         dates=[]
         datum = input("Bitte Geben Sie ein Datum ein: ")
-        datum = datum.strip().split(".")
-        tt, mm, jjjj = int(datum[0]), int(datum[1]), int(datum[-1])
-        datum = date(jjjj, mm, tt)
-        #datum = format_date(datum, "dd.MM.yyyy", locale='ger')
+        try:
+            datum = datum.strip().split(".")
+            tt, mm, jjjj = int(datum[0]), int(datum[1]), int(datum[-1])
+        except Exception as e:
+            print("Nur das Format TT.DD.JJJJ ist erlaubt")
+            flag = True
+            while(flag):
+                try:
+                    datum = input("Bitte Geben Sie ein Datum ein: ")
+                    datum = datum.strip().split(".")
+                    tt, mm, jjjj = int(datum[0]), int(datum[1]), int(datum[-1])
+                    flag = False
+                except Exception as e:
+                    print("Nur das Format TT.DD.JJJJ ist erlaubt")
 
+        datum = date(jjjj, mm, tt)
         dates.append(datum)
         zeit = input("Bitte geben Sie eine Zeit ein: ")
         zeit = zeit.strip().split(":")
