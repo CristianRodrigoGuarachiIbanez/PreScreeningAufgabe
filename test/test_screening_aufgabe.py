@@ -1,5 +1,8 @@
 from pre_screening.pre_screening_aufgabe import *
 import argparse
+import pytest
+
+
 def current_time(heute, index):
     heute = heute.split(" ")
     today = heute[0].split(".")
@@ -21,6 +24,8 @@ def current_time(heute, index):
         hour = today + " " + str(hh)+":"+str(mm)+":"+zeit[2] +"\n"
         output.append(hour)
     return output
+
+
 def create_examples():
     filename="example"
     for i in range(0,25, 5):
@@ -34,16 +39,17 @@ def create_examples():
                 file.write(line)
             file.close()
 
-def test_make_sleep(argv=None):
+def _make_sleep(num=None):
     create_examples()
     filename = None
     flag1, flag2, flag3, flag4,flag5 = None, None, None, None, None
     parser=argparse.ArgumentParser()
-    parser.add_argument("-dates", "--num_dates", type=int)
-    args = parser.parse_args()
-    num = args.num_dates
+    # parser.add_argument("-dates", "--num_dates", type=int)
+    # args = parser.parse_args()
+    # num = args.num_dates
     if(num is None):
-        num = 5
+        num = input("Wie viele Daten möchten Sie eingeben? ")
+        num = get_input_number(num)
     if(num==1):
         parser.add_argument("--input1", action="store", default="example1.txt")
         flag1 = True
@@ -56,10 +62,12 @@ def test_make_sleep(argv=None):
     elif (num == 15):
         parser.add_argument("--input4", action="store", default="example15.txt")
         flag4 = True
-    else:
+    elif(num==20):
         parser.add_argument("--input5", action="store", default="example20.txt")
         flag5 = True
-
+    else:
+        print("Bitte geben Sie eine der folgengen Zahlen 1, 5, 10, 15, 20 ein")
+        exit()
     args = parser.parse_args()
     if(flag1):
         filename = args.input1
@@ -76,5 +84,11 @@ def test_make_sleep(argv=None):
         line = file.readlines()
         seks, dates = get_days(num, line)
         make_sleep(seks, dates)
-if(__name__=="__main__"):
-    test_make_sleep()
+
+@pytest.mark.parametrize("num", [1,5,10])
+def test_make_sleep(num):
+    _make_sleep(num)
+
+
+if(__name__ == "__main__"):
+    _make_sleep()
