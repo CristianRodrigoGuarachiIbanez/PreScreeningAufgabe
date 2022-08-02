@@ -6,4 +6,4 @@ py==1.11.0
 pyparsing==3.0.9
 pytest==7.1.2
 pytz==2022.1
-tomli==2.0.1
+tomli==1.2.3
