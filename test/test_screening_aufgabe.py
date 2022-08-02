@@ -71,7 +71,7 @@ def _make_sleep(num=None, filename=None):
         make_sleep(seks, dates)
 
 
-@pytest.mark.parametrize("num", [1, 5])
+@pytest.mark.parametrize("num", [1,2])
 def test_make_sleep(num):
     _make_sleep(num)
 
