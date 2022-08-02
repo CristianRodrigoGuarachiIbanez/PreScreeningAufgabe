@@ -27,7 +27,7 @@ def current_time(heute, index):
 
 
 def create_examples():
-    filename="example"
+    filename="./example"
     for i in range(0,25, 5):
         if(i==0):
             i+=1
