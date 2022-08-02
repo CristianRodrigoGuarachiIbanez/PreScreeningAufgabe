@@ -2,9 +2,7 @@
 from time import sleep
 from datetime import datetime, time, date
 from sys import exit
-import pytz
 from babel.dates import format_date
-tz_germany = pytz.timezone('Europe/Berlin')
 
 
 class DDATES:
