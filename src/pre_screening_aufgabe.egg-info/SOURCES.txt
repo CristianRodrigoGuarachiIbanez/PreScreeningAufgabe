@@ -1,0 +1,13 @@
+LICENSE
+pyproject.toml
+setup.cfg
+setup.py
+src/pre_screening/__init__.py
+src/pre_screening/pre_screening_aufgabe.py
+src/pre_screening_aufgabe.egg-info/PKG-INFO
+src/pre_screening_aufgabe.egg-info/SOURCES.txt
+src/pre_screening_aufgabe.egg-info/dependency_links.txt
+src/pre_screening_aufgabe.egg-info/not-zip-safe
+src/pre_screening_aufgabe.egg-info/requires.txt
+src/pre_screening_aufgabe.egg-info/top_level.txt
+test/test_screening_aufgabe.py
