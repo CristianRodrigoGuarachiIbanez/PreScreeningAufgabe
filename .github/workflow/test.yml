@@ -1,4 +1,4 @@
-name: Test_Pre_Screening
+name: Test_Task
 
 on:
   - push
