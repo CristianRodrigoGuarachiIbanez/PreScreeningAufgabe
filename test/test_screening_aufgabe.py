@@ -1,7 +1,7 @@
 from pre_screening.pre_screening_aufgabe import *
 import argparse
 import pytest
-
+import os
 
 def current_time(heute, index):
     heute = heute.split(" ")
@@ -26,69 +26,65 @@ def current_time(heute, index):
     return output
 
 
-def create_examples():
-    filename="./example"
-    for i in range(0,25, 5):
-        if(i==0):
-            i+=1
-        name = filename + str(i) +".txt"
-        today = datetime.today().strftime('%Y.%m.%d %H:%M:%S')
-        examples = current_time(today, i)
-        with open(name, "w") as file:
-            for line in examples:
-                file.write(line)
-            file.close()
+def create_examples(index=1):
+    path = os.path.dirname(os.path.realpath(__file__))
+    print(path)
+    filename=path + "/example"
+    name = filename + str(index) + ".txt"
+    today = datetime.today().strftime('%Y.%m.%d %H:%M:%S')
+    examples = current_time(today, index)
+    with open(name, "w") as file:
+        for line in examples:
+            file.write(line)
+        file.close()
 
-def _make_sleep(num=None):
-    create_examples()
-    filename = None
-    flag1, flag2, flag3, flag4,flag5 = None, None, None, None, None
-    parser=argparse.ArgumentParser()
-    # parser.add_argument("-dates", "--num_dates", type=int)
-    # args = parser.parse_args()
-    # num = args.num_dates
+def _make_sleep(num=None, filename=None):
+
     if(num is None):
         num = input("Wie viele Daten möchten Sie eingeben? ")
         num = get_input_number(num)
-    if(num==1):
-        parser.add_argument("--input1", action="store", default="example1.txt")
-        flag1 = True
-    elif(num==5):
-        parser.add_argument("--input2", action="store", default="example5.txt")
-        flag2 = True
-    elif(num==10):
-        parser.add_argument("--input3", action="store", default="example10.txt")
-        flag3 = True
-    elif (num == 15):
-        parser.add_argument("--input4", action="store", default="example15.txt")
-        flag4 = True
-    elif(num==20):
-        parser.add_argument("--input5", action="store", default="example20.txt")
-        flag5 = True
-    else:
-        print("Bitte geben Sie eine der folgengen Zahlen 1, 5, 10, 15, 20 ein")
-        exit()
-    args = parser.parse_args()
-    if(flag1):
-        filename = args.input1
-    elif(flag2):
-        filename = args.input2
-    elif(flag3):
-        filename = args.input3
-    elif (flag4):
-        filename = args.input4
-    elif (flag5):
-        filename = args.input5
+
+    create_examples(num)
+
+    if (filename is None):
+        path = os.path.dirname(os.path.realpath(__file__))
+        if(num==1):
+            filename = path + "/example1.txt"
+        elif(num==5):
+            filename = path + "/example5.txt"
+        elif(num==10):
+            filename = path + "/example10.txt"
+        elif (num == 15):
+            filename = path + "/example15.txt"
+        elif(num==20):
+            filename = path + "/example20.txt"
+        else:
+            print("Bitte geben Sie eine der folgengen Zahlen 1, 5, 10, 15, 20 ein")
+            exit()
 
     with open(filename) as file:
         line = file.readlines()
         seks, dates = get_days(num, line)
         make_sleep(seks, dates)
 
-@pytest.mark.parametrize("num", [1,5,10])
+@pytest.mark.parametrize("num", [1,5])
 def test_make_sleep(num):
     _make_sleep(num)
 
 
 if(__name__ == "__main__"):
-    _make_sleep()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-dates", "--num_dates", type=int)
+    args = parser.parse_args()
+    if not (args.num_dates is None):
+        num = args.num_dates[:]
+    else:
+        num = None
+    parser.add_argument("--input", action="store")
+    args = parser.parse_args()
+    if not (args.input is None):
+        filename = args.input[:]
+    else:
+        filename = None
+
+    _make_sleep(num, filename)

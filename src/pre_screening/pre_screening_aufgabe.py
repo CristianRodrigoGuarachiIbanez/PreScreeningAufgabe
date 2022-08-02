@@ -25,6 +25,7 @@ def get_input_number(eingabe):
 
     return int(eingabe.strip())
 
+
 def get_date(num, inputt=None):
     i = 0
     DATES = []
@@ -70,7 +71,7 @@ def get_days(num, inputt=None):
         jetzt = datetime.strptime(now, '%Y-%m-%d %H:%M:%S')
         stunden = datetime.combine(datum, hh) - jetzt
         inSek.append(stunden.seconds)
-        print("EINGABE ->", hh, " JETZIGE ZEIT -> ", jetzt, " DIFFERENZ IN SEK -> ", stunden.seconds)
+        print("EINGABE -> {} {}".format(datum, hh), " JETZIGE ZEIT -> ", jetzt, " DIFFERENZ IN SEK -> ", stunden.seconds)
     return inSek, dates
 
 
